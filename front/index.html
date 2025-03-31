@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="fetch_btn">FETCH</button>
+    <script>
+        const btn = document.querySelector('#fetch_btn')
+    btn.addEventListener('click', async (e) => {
+        e.preventDefault()
+        try {
+            const j1 = {
+                    name: "Мария",
+                    surname: "Сильвестрова",
+                    father_name: "Сергеевна",
+                }
+
+            const j2 = {
+                    id: 2142,
+                }
+            
+            const j3 = {
+                    date_time:new Date(),
+                }
+
+            const j4 = {
+                    login:"test",
+                    password:"zxc123",
+                }
+
+            const j5 = {
+                    id_school:1,
+                }
+            // await fet1_post(j1,'student/auth/')
+            // await fet1_post(j2,'student/get_info_by_id/')
+            await fet1_get('master_classes/today/')
+            await fet1_post(j5,'students_by_school_id')
+            await fet1_post(j4,'teacher/auth')
+        } catch (error) {
+            console.error('Fetch error:', error)
+        }
+        // try {
+        //     const response = await fetch('http://localhost:8000/students')
+        //     const data = await response.json()
+        //     console.log('Received data:', data)
+        // } catch (error) {
+        //     console.error('Fetch error:', error)
+        // }
+
+
+        async function fet1_post(json,url){
+            const response = await fetch(`http://localhost:8000/${url}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body:JSON.stringify(json)
+            })
+            const data = await response.json()
+            console.log('Received data:', data)
+        }
+
+        async function fet1_get(url){
+            const response = await fetch(`http://localhost:8000/${url}`)
+            const data = await response.json()
+            console.log('Received data:', data)
+        }
+    })
+    </script>
+</body>
+</html>
